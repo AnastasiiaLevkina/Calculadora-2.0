@@ -1,40 +1,42 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Calculadora</title>
-    <link rel="stylesheet" href="style.css"> 
+    <link rel="stylesheet" href="style.css" />
     <script src="./models/Button.js" defer></script>
     <script src="./models/Display.js" defer></script>
     <script src="./models/OperatorButton.js" defer></script>
     <script src="script.js" defer></script>
-</head>
-<body>
+  </head>
+  <body>
     <div id="main">
-        <div id="calculadora">
-            <header class="display" id="display">0</header>
-            <main>
-                <button id="clearButton" data-type="clear">C</button>
-                <button id="delButton" data-type="delete">DEL</button>
-                <button class="num" id="changeSignButton" data-type="changeSign">+/-</button>
-                <button class="op" id="op/" data-type="operator">/</button>
-                <button class="num" id="1" data-type="number">1</button>
-                <button class="num" id="2" data-type="number">2</button>
-                <button class="num" id="3" data-type="number">3</button>
-                <button class="op" id="opx" data-type="operator">x</button>
-                <button class="num" id="4" data-type="number">4</button>
-                <button class="num" id="5" data-type="number">5</button>
-                <button class="num" id="6" data-type="number">6</button>
-                <button class="op" id="op+" data-type="operator">+</button>
-                <button class="num" id="7" data-type="number">7</button>
-                <button class="num" id="8" data-type="number">8</button>
-                <button class="num" id="9" data-type="number">9</button>
-                <button class="op" id="op-" data-type="operator">-</button>
-                <button id="comma" data-type="comma">,</button>
-                <button class="num" id="0" data-type="number">0</button>
-                <button class="long" id="equalButton" data-type="equal">=</button>
-            </main>
-        </div>
+      <div id="calculadora">
+        <header class="display" id="display">0</header>
+        <main>
+          <button id="clearButton" data-type="clear">C</button>
+          <button id="delButton" data-type="delete">DEL</button>
+          <button class="num" id="changeSignButton" data-type="changeSign">
+            +/-
+          </button>
+          <button class="op" id="op/" data-type="operator">/</button>
+          <button class="num" id="1" data-type="number">1</button>
+          <button class="num" id="2" data-type="number">2</button>
+          <button class="num" id="3" data-type="number">3</button>
+          <button class="op" id="opx" data-type="operator">x</button>
+          <button class="num" id="4" data-type="number">4</button>
+          <button class="num" id="5" data-type="number">5</button>
+          <button class="num" id="6" data-type="number">6</button>
+          <button class="op" id="op+" data-type="operator">+</button>
+          <button class="num" id="7" data-type="number">7</button>
+          <button class="num" id="8" data-type="number">8</button>
+          <button class="num" id="9" data-type="number">9</button>
+          <button class="op" id="op-" data-type="operator">-</button>
+          <button id="comma" data-type="comma">,</button>
+          <button class="num" id="0" data-type="number">0</button>
+          <button class="long" id="equalButton" data-type="equal">=</button>
+        </main>
+      </div>
     </div>
-</body>
+  </body>
 </html>
