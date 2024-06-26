@@ -49,15 +49,7 @@ function enterDigit(digit){
   }
   if(!reachedMaxDigits){
     if(digit === ","){
-      if(!hasComma){
-        if (selectedNum.length === 0) {
-          selectedNum = "0,"
-        } else {
-          selectedNum += digit
-        }
-        hasComma = true
-        commaButton.disableDOMButton()
-      } 
+      handleCommaInput() 
     } else {
       selectedNum += digit
     }
@@ -79,6 +71,18 @@ function enterDigit(digit){
       disableDigitInputButtons()
     }
   } 
+}
+
+function handleCommaInput(){
+  if(!hasComma){
+    if (selectedNum.length === 0) {
+      selectedNum = "0,"
+    } else {
+      selectedNum += ","
+    }
+    hasComma = true
+    commaButton.disableDOMButton()
+  }
 }
 
 function disableDigitInputButtons(){
