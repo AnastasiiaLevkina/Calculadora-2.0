@@ -11,7 +11,7 @@ const display = document.querySelector("header");
 const calcDisplay = new Display(display, defaultDisplayOutput)
 
 const numButtons = []
-const operatorButtons = []
+const operatorButtons = new Map()
 const clearButton = addClearInputDOMButtonEventListener()
 const deleteButton = addDeleteInputDOMButtonEventListener()
 const equalButton = addEqualInputDOMButtonEventListener()
@@ -22,6 +22,7 @@ let displayCleanNeeded = false
 let hasComma = false;
 let operatorClicked = false;
 let reachedMaxDigits = false;
+let finishedInputFirstNumber = false;
 let operatorAndCommandButtonsDisabled 
 let inputDigitButtonsDisabled 
 
@@ -42,6 +43,10 @@ function getMaxNum(maxDigits){
 }
 
 function enterDigit(digit){
+  if(displayCleanNeeded){
+    selectedNum = ""
+    displayCleanNeeded = false
+  }
   if(!reachedMaxDigits){
     if(digit === ","){
       if(!hasComma){
@@ -59,11 +64,13 @@ function enterDigit(digit){
     if(operatorAndCommandButtonsDisabled){
       enableOperatorAndCommandButtons()
     }
-    if (!selectedNum.includes(",")) {
-      if (selectedNum[0] === "-") {
-        selectedNum = "-" + selectedNum.slice(2, selectedNum.length)
-      }else {
-        selectedNum = selectedNum.slice(1, selectedNum.length)
+    if(selectedNum.length > String(parseFloat(selectedNum)).length){
+      if(selectedNum != "-0" && !selectedNum.includes(",")){
+        if (selectedNum[0] === "-") {
+          selectedNum = "-" + selectedNum.slice(2, selectedNum.length)
+        }else {
+          selectedNum = selectedNum.slice(1, selectedNum.length)
+        }
       }
     }
     calcDisplay.updateDisplayOutput(selectedNum)
@@ -104,17 +111,23 @@ function enableOperatorAndCommandButtons(){
   operatorAndCommandButtonsDisabled = false
 }
 
-function disableOperatorAndCommandButtons(){
+function disableOperatorAndCommandButtons(disableClear){
   operatorButtons.forEach((button) => {
     button.disableDOMButton()
   })
-  clearButton.disableDOMButton()
+  if(disableClear){
+    clearButton.disableDOMButton()
+  }
   deleteButton.disableDOMButton()
   equalButton.disableDOMButton()
   operatorAndCommandButtonsDisabled = true
 }
 
 function changeInputNumberSign(){
+  if(displayCleanNeeded){
+    selectedNum = ""
+    displayCleanNeeded = false
+  }
   if (selectedNum[0] === "-") { 
     selectedNum = selectedNum.slice(1, selectedNum.length)
     if (inputDigitButtonsDisabled) {
@@ -127,7 +140,8 @@ function changeInputNumberSign(){
     }
     selectedNum = "-" + selectedNum
     if(selectedNum.length === maxDigits){
-
+      reachedMaxDigits = true
+      disableDigitInputButtons()
     }
   }
   
@@ -136,59 +150,126 @@ function changeInputNumberSign(){
 }
 
 function selectOperator(op){
+  if(!finishedInputFirstNumber){
+    num1 = parseFloat(selectedNum.replace(",","."))
+    displayCleanNeeded = true
+    reachedMaxDigits = false
+    finishedInputFirstNumber = true
+    hasComma = false
+    commaButton.enableDOMButton()
+    enableDigitInputButtons()
+  }
+  if(selectedOperator === ""){
+    selectedOperator = op
+    operatorButtons.get(op).highlightDOMButton()
+  }else if(selectedOperator === op){
+    selectedOperator = ""
+    operatorButtons.get(op).removeHighlightDOMButton()
+  }
 
 }
 
 function executeClear(){
-  disableOperatorAndCommandButtons()
+  disableOperatorAndCommandButtons(true)
   calcDisplay.setDefaultDisplayOutput()
   enableDigitInputButtons()
   hasComma = false
   reachedMaxDigits = false
   selectedNum = ""
+  if(selectedOperator != ""){
+    operatorButtons.get(selectedOperator).removeHighlightDOMButton()
+    selectedOperator = ""
+    finishedInputFirstNumber = false
+    displayCleanNeeded = false
+  }
 }
 
 function executeDelete(){
-
+  if(selectedNum.length > 0 && selectedNum != "-0"){
+    selectedNum = selectedNum.slice(0,selectedNum.length - 1)
+    if(!selectedNum.includes(",") && hasComma){
+      hasComma = false
+      commaButton.enableDOMButton()
+    }
+    if(selectedNum.length === 0){
+      selectedNum = "0"
+    }else if(selectedNum === "-"){
+      selectedNum = "-0"
+    }
+    calcDisplay.updateDisplayOutput(selectedNum)
+    if(inputDigitButtonsDisabled){
+      enableDigitInputButtons() 
+      reachedMaxDigits = false
+    }
+  }
 }
 
 function executeEqual(){
+  let operationExecuted = true
+  if (finishedInputFirstNumber) {
+    num2 = parseFloat(selectedNum.replace(",", "."))
+    switch (selectedOperator) {
+      case "+":
+        result = sum()
+        break;
+      case "-":
+        result = substract()
+        break;
+      case "x":
+        result = multiply()
+        break;
+      case "/":
+        result = divide()
+        break;
+      default:
+        result = parseFloat(selectedNum)
+        operationExecuted = false
+        break;
+    }
+  }else{
+    result = parseFloat(selectedNum.replace(",","."))
+    operationExecuted = false
+  }
+ if(result != null){
+  let formattedResult = String(result).replace(".",",")
+  if(formattedResult.length > maxDigits){
+    formattedResult = String(result.toExponential(2).replace(".",","))
+  }
+  calcDisplay.updateDisplayOutput(formattedResult)
+ }else{
+  calcDisplay.showErrorMessage("ERROR")
+ }
+ if(operationExecuted){
+    blockAllButtonsButClear()
+ }
+}
 
+function blockAllButtonsButClear(){
+  disableDigitInputButtons()
+  disableOperatorAndCommandButtons(false)
+  changeSignButton.disableDOMButton()
 }
 
 function sum(){
-    result = String(num1 + num2);
-    return result;
+    return num1 + num2;
 }
 
 function substract(){
-    result = String(num1 - num2);
-    return result;
+    return num1 - num2;
 }
 
 function multiply(){
-    result = String(num1 * num2);
-    return result;
+    return num1 * num2;
 }
 
 function divide(){
+  let result
     if(num2 != 0){
-        result = String(num1 / num2);
+        result = num1 / num2;
     }else {
-        result = "ERROR";
+        result = null;
     }
     return result;
-}
-
-function clear(){
-    num1 = 0;
-    num2 = 0;
-    operator = "";
-    result = "";
-    displayCleanNeeded = false;
-    hasComma = false;
-    operatorClicked = false;
-    numberClicked = false; 
 }
 
 function addNumberInputDOMButtonEventListener() { 
@@ -225,11 +306,11 @@ function addNumberInputDOMButtonEventListener() {
     const operators = document.querySelectorAll("button[data-type = operator]");
     operators.forEach((button) => {
       button.addEventListener("click", (event) => {
-        let clickedOp = event.target;
+        let clickedOp = event.target.textContent;
         selectOperator(clickedOp);
       });
       const opButton = new OperatorButton(button);
-      operatorButtons.push(opButton) 
+      operatorButtons.set(button.textContent,opButton) 
     });
   }
   
