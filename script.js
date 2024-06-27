@@ -56,20 +56,28 @@ function enterDigit(digit) {
     if (operatorAndCommandButtonsDisabled) {
       enableOperatorAndCommandButtons();
     }
-    if (selectedNum.length > String(parseFloat(selectedNum)).length) {
-      if (selectedNum != "-0" && !selectedNum.includes(",")) {
-        if (selectedNum[0] === "-") {
-          selectedNum = "-" + selectedNum.slice(2, selectedNum.length);
-        } else {
-          selectedNum = selectedNum.slice(1, selectedNum.length);
-        }
+    controlInputNumberCoherency();
+    printOutputAndContolLength();
+  }
+}
+
+function controlInputNumberCoherency() {
+  if (selectedNum.length > String(parseFloat(selectedNum)).length) {
+    if (selectedNum != "-0" && !selectedNum.includes(",")) {
+      if (selectedNum[0] === "-") {
+        selectedNum = "-" + selectedNum.slice(2, selectedNum.length);
+      } else {
+        selectedNum = selectedNum.slice(1, selectedNum.length);
       }
     }
-    calcDisplay.updateDisplayOutput(selectedNum);
-    if (selectedNum.length === maxDigits) {
-      reachedMaxDigits = true;
-      disableDigitInputButtons();
-    }
+  }
+}
+
+function printOutputAndContolLength() {
+  calcDisplay.updateDisplayOutput(selectedNum);
+  if (selectedNum.length === maxDigits) {
+    reachedMaxDigits = true;
+    disableDigitInputButtons();
   }
 }
 
@@ -209,6 +217,7 @@ function executeDelete() {
 function executeEqual() {
   let operationExecuted = true;
   if (finishedInputFirstNumber && !displayCleanNeeded) {
+    num2 = parseFloat(selectedNum.replace(",", "."));
     switch (selectedOperator) {
       case "+":
         result = sum();
@@ -231,6 +240,13 @@ function executeEqual() {
     result = parseFloat(selectedNum.replace(",", "."));
     operationExecuted = false;
   }
+  printFormattedOutput(result);
+  if (operationExecuted) {
+    blockAllButtonsButClear();
+  }
+}
+
+function printFormattedOutput(result) {
   if (result != null) {
     let formattedResult = String(result).replace(".", ",");
     if (formattedResult.length > maxDigits) {
@@ -239,9 +255,6 @@ function executeEqual() {
     calcDisplay.updateDisplayOutput(formattedResult);
   } else {
     calcDisplay.showErrorMessage("ERROR");
-  }
-  if (operationExecuted) {
-    blockAllButtonsButClear();
   }
 }
 
