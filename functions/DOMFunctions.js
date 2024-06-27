@@ -8,7 +8,7 @@ function addNumberInputDOMButtonEventListener() {
     });
 
     const numButton = new Button(button);
-    numButtons.push(numButton);
+    NUM_BUTTONS.push(numButton);
   });
 }
 
@@ -44,7 +44,7 @@ function addOperatorInputDOMButtonEventListener() {
     });
 
     const opButton = new OperatorButton(button);
-    operatorButtons.set(button.textContent, opButton);
+    OPERATOR_BUTTONS.set(button.textContent, opButton);
   });
 }
 

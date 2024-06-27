@@ -5,16 +5,16 @@ let selectedOperator = "";
 let selectedNum = "";
 
 const MAX_DIGITS = 9;
-const display = document.querySelector("#display");
-const calcDisplay = new Display(display);
+const DISPLAY = document.querySelector("#display");
+const CALC_DISPLAY = new Display(display);
 
-const numButtons = [];
-const operatorButtons = new Map();
-const clearButton = addClearInputDOMButtonEventListener();
-const deleteButton = addDeleteInputDOMButtonEventListener();
-const equalButton = addEqualInputDOMButtonEventListener();
-const commaButton = addCommaInputDOMButtonEventListener();
-const changeSignButton = addChangeSignInputDOMButtonEventListener();
+const NUM_BUTTONS = [];
+const OPERATOR_BUTTONS = new Map();
+const CLEAR_BUTTON = addClearInputDOMButtonEventListener();
+const DELETE_BUTTON = addDeleteInputDOMButtonEventListener();
+const EQUAL_BUTTON = addEqualInputDOMButtonEventListener();
+const COMMA_BUTTON = addCommaInputDOMButtonEventListener();
+const CHANGE_SIGN_BUTTON = addChangeSignInputDOMButtonEventListener();
 
 let displayCleanNeeded;
 let hasComma;
@@ -70,9 +70,9 @@ function controlInputNumberCoherency() {
 }
 
 function printOutputAndControlLength() {
-  calcDisplay.updateDisplayOutput(selectedNum);
+  CALC_DISPLAY.updateDisplayOutput(selectedNum);
 
-  if (selectedNum.length === maxDigits) {
+  if (selectedNum.length === MAX_DIGITS) {
     reachedMaxDigits = true;
     disableDigitInputButtons();
   }
@@ -92,7 +92,7 @@ function handleCommaInput() {
 }
 
 function disableDigitInputButtons() {
-  numButtons.forEach((button) => {
+  NUM_BUTTONS.forEach((button) => {
     button.disableDOMButton();
   });
 
@@ -106,7 +106,7 @@ function disableDigitInputButtons() {
 }
 
 function enableDigitInputButtons() {
-  numButtons.forEach((button) => {
+  NUM_BUTTONS.forEach((button) => {
     button.enableDOMButton();
   });
 
@@ -116,7 +116,7 @@ function enableDigitInputButtons() {
 }
 
 function enableOperatorAndCommandButtons() {
-  operatorButtons.forEach((button) => {
+  OPERATOR_BUTTONS.forEach((button) => {
     button.enableDOMButton();
   });
 
@@ -127,7 +127,7 @@ function enableOperatorAndCommandButtons() {
 }
 
 function disableOperatorAndCommandButtons(disableClear) {
-  operatorButtons.forEach((button) => {
+  OPERATOR_BUTTONS.forEach((button) => {
     button.disableDOMButton();
   });
 
@@ -160,13 +160,13 @@ function changeInputNumberSign() {
 
     selectedNum = "-" + selectedNum;
 
-    if (selectedNum.length === maxDigits) {
+    if (selectedNum.length === MAX_DIGITS) {
       reachedMaxDigits = true;
       disableDigitInputButtons();
     }
   }
 
-  calcDisplay.updateDisplayOutput(selectedNum);
+  CALC_DISPLAY.updateDisplayOutput(selectedNum);
 }
 
 function selectOperator(op) {
@@ -182,10 +182,10 @@ function selectOperator(op) {
 
   if (selectedOperator === "") {
     selectedOperator = op;
-    operatorButtons.get(op).highlightDOMButton();
+    OPERATOR_BUTTONS.get(op).highlightDOMButton();
   } else if (selectedOperator === op) {
     selectedOperator = "";
-    operatorButtons.get(op).removeHighlightDOMButton();
+    OPERATOR_BUTTONS.get(op).removeHighlightDOMButton();
   }
 }
 
@@ -193,10 +193,10 @@ function executeClear() {
   disableOperatorAndCommandButtons(true);
   enableDigitInputButtons();
   selectedNum = "0";
-  calcDisplay.updateDisplayOutput(selectedNum);
+  CALC_DISPLAY.updateDisplayOutput(selectedNum);
 
   if (selectedOperator != "") {
-    operatorButtons.get(selectedOperator).removeHighlightDOMButton();
+    OPERATOR_BUTTONS.get(selectedOperator).removeHighlightDOMButton();
     selectedOperator = "";
   }
 
@@ -221,7 +221,7 @@ function executeDelete() {
       selectedNum = "-0";
     }
 
-    calcDisplay.updateDisplayOutput(selectedNum);
+    CALC_DISPLAY.updateDisplayOutput(selectedNum);
 
     if (inputDigitButtonsDisabled) {
       enableDigitInputButtons();
@@ -270,13 +270,13 @@ function printFormattedOutput(result) {
   if (result != null) {
     let formattedResult = String(result).replace(".", ",");
 
-    if (formattedResult.length > maxDigits) {
+    if (formattedResult.length > MAX_DIGITS) {
       formattedResult = String(result.toExponential(2).replace(".", ","));
     }
 
-    calcDisplay.updateDisplayOutput(formattedResult);
+    CALC_DISPLAY.updateDisplayOutput(formattedResult);
   } else {
-    calcDisplay.showErrorMessage("ERROR");
+    CALC_DISPLAY.showErrorMessage("ERROR");
   }
 }
 
