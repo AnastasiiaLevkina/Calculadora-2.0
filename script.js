@@ -6,7 +6,6 @@ let selectedNum = "";
 
 let defaultDisplayOutput = "0";
 const maxDigits = 9;
-const maxNum = getMaxNum(maxDigits);
 const display = document.querySelector("#display");
 const calcDisplay = new Display(display, defaultDisplayOutput);
 
@@ -18,11 +17,10 @@ const equalButton = addEqualInputDOMButtonEventListener();
 const commaButton = addCommaInputDOMButtonEventListener();
 const changeSignButton = addChangeSignInputDOMButtonEventListener();
 
-let displayCleanNeeded = false;
-let hasComma = false;
-let operatorClicked = false;
-let reachedMaxDigits = false;
-let finishedInputFirstNumber = false;
+let displayCleanNeeded;
+let hasComma;
+let reachedMaxDigits;
+let finishedInputFirstNumber;
 let operatorAndCommandButtonsDisabled;
 let inputDigitButtonsDisabled;
 
@@ -32,14 +30,6 @@ function main() {
   addNumberInputDOMButtonEventListener();
   addOperatorInputDOMButtonEventListener();
   executeClear();
-}
-
-function getMaxNum(maxDigits) {
-  let maxNum = "";
-  for (let digit = 0; digit < maxDigits; digit++) {
-    maxNum += "9";
-  }
-  return parseFloat(maxNum);
 }
 
 function enterDigit(digit) {
@@ -183,15 +173,15 @@ function executeClear() {
   disableOperatorAndCommandButtons(true);
   calcDisplay.setDefaultDisplayOutput();
   enableDigitInputButtons();
-  hasComma = false;
-  reachedMaxDigits = false;
   selectedNum = "";
   if (selectedOperator != "") {
     operatorButtons.get(selectedOperator).removeHighlightDOMButton();
     selectedOperator = "";
-    finishedInputFirstNumber = false;
-    displayCleanNeeded = false;
   }
+  hasComma = false;
+  reachedMaxDigits = false;
+  finishedInputFirstNumber = false;
+  displayCleanNeeded = false;
 }
 
 function executeDelete() {
