@@ -44,7 +44,7 @@ button {
   cursor: pointer;
 }
 
-button:highlighted:not(.op, .blocked) {
+button:highlighted:not(.operatorButton, .blockedButton) {
   filter: brightness(3);
 }
 
