@@ -28,6 +28,7 @@ main();
 function main() {
   addNumberInputDOMButtonEventListener();
   addOperatorInputDOMButtonEventListener();
+
   executeClear();
 }
 
@@ -46,7 +47,7 @@ function enterDigit(digit) {
       enableOperatorAndCommandButtons();
     }
     controlInputNumberCoherency();
-    printOutputAndContolLength();
+    printOutputAndControlLength();
   }
 }
 
@@ -62,7 +63,7 @@ function controlInputNumberCoherency() {
   }
 }
 
-function printOutputAndContolLength() {
+function printOutputAndControlLength() {
   calcDisplay.updateDisplayOutput(selectedNum);
   if (selectedNum.length === maxDigits) {
     reachedMaxDigits = true;
