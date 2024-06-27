@@ -213,7 +213,7 @@ function executeEqual() {
         result = sum();
         break;
       case "-":
-        result = substract();
+        result = subtract();
         break;
       case "x":
         result = multiply();
@@ -258,7 +258,7 @@ function sum() {
   return num1 + num2;
 }
 
-function substract() {
+function subtract() {
   return num1 - num2;
 }
 
