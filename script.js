@@ -4,10 +4,9 @@ let result = 0;
 let selectedOperator = "";
 let selectedNum = "";
 
-let defaultDisplayOutput = "0";
 const maxDigits = 9;
 const display = document.querySelector("#display");
-const calcDisplay = new Display(display, defaultDisplayOutput);
+const calcDisplay = new Display(display);
 
 const numButtons = [];
 const operatorButtons = new Map();
@@ -171,9 +170,9 @@ function selectOperator(op) {
 
 function executeClear() {
   disableOperatorAndCommandButtons(true);
-  calcDisplay.setDefaultDisplayOutput();
   enableDigitInputButtons();
-  selectedNum = "";
+  selectedNum = "0";
+  calcDisplay.updateDisplayOutput(selectedNum);
   if (selectedOperator != "") {
     operatorButtons.get(selectedOperator).removeHighlightDOMButton();
     selectedOperator = "";
