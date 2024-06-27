@@ -210,16 +210,16 @@ function executeEqual() {
     num2 = parseFloat(selectedNum.replace(",", "."));
     switch (selectedOperator) {
       case "+":
-        result = sum();
+        result = sum(num1, num2);
         break;
       case "-":
-        result = subtract();
+        result = subtract(num1, num2);
         break;
       case "x":
-        result = multiply();
+        result = multiply(num1, num2);
         break;
       case "/":
-        result = divide();
+        result = divide(num1, num2);
         break;
       default:
         result = parseFloat(selectedNum);

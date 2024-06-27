@@ -1,16 +1,16 @@
-function sum() {
+function sum(num1, num2) {
   return num1 + num2;
 }
 
-function subtract() {
+function subtract(num1, num2) {
   return num1 - num2;
 }
 
-function multiply() {
+function multiply(num1, num2) {
   return num1 * num2;
 }
 
-function divide() {
+function divide(num1, num2) {
   let result;
   if (num2 != 0) {
     result = num1 / num2;
