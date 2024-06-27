@@ -46,7 +46,7 @@ function enterDigit(digit) {
     }
 
     if (operatorAndCommandButtonsDisabled) {
-      enableOperatorAndCommandButtons();
+      setEnabledOperatorAndCommandButtons(true)
     }
 
     controlInputNumberCoherency();
@@ -72,9 +72,9 @@ function controlInputNumberCoherency() {
 function printOutputAndControlLength() {
   calcDisplay.updateDisplayOutput(selectedNum);
 
-  if (selectedNum.length === maxDigits) {
+  if (selectedNum.length === MAX_DIGITS) {
     reachedMaxDigits = true;
-    disableDigitInputButtons();
+    setEnabledDigitInputButtons(false);
   }
 }
 
@@ -91,53 +91,50 @@ function handleCommaInput() {
   }
 }
 
-function disableDigitInputButtons() {
+function setEnabledDigitInputButtons(enable) {
   numButtons.forEach((button) => {
-    button.disableDOMButton();
+    if (enable) {
+      button.enableDOMButton();
+    } else {
+      button.disableDOMButton();
+    }
+    
   });
+  if (enable) {
+    commaButton.enableDOMButton();
+    changeSignButton.enableDOMButton();
 
-  commaButton.disableDOMButton();
+  } else {
+    commaButton.disableDOMButton();
+    if (selectedNum[0] != "-") {
+      changeSignButton.disableDOMButton();
+    }
 
-  if (selectedNum[0] != "-") {
-    changeSignButton.disableDOMButton();
   }
-
-  inputDigitButtonsDisabled = true;
+  inputDigitButtonsDisabled = !enable;
 }
 
-function enableDigitInputButtons() {
-  numButtons.forEach((button) => {
-    button.enableDOMButton();
-  });
-
-  commaButton.enableDOMButton();
-  changeSignButton.enableDOMButton();
-  inputDigitButtonsDisabled = false;
-}
-
-function enableOperatorAndCommandButtons() {
+function setEnabledOperatorAndCommandButtons(enable, disableClear = false) {
   operatorButtons.forEach((button) => {
-    button.enableDOMButton();
+    if (enable) {
+      button.enableDOMButton();
+    } else {
+      button.disableDOMButton();
+    }
   });
 
-  clearButton.enableDOMButton();
-  deleteButton.enableDOMButton();
-  equalButton.enableDOMButton();
-  operatorAndCommandButtonsDisabled = false;
-}
-
-function disableOperatorAndCommandButtons(disableClear) {
-  operatorButtons.forEach((button) => {
-    button.disableDOMButton();
-  });
-
-  if (disableClear) {
+  if (enable) {
+    deleteButton.enableDOMButton();
+    equalButton.enableDOMButton();
+    clearButton.enableDOMButton();
+  } else {
+    deleteButton.disableDOMButton();
+    equalButton.disableDOMButton();
+    if (disableClear) {
     clearButton.disableDOMButton();
+    }
   }
-
-  deleteButton.disableDOMButton();
-  equalButton.disableDOMButton();
-  operatorAndCommandButtonsDisabled = true;
+  operatorAndCommandButtonsDisabled = !enable;
 }
 
 function changeInputNumberSign() {
@@ -150,7 +147,7 @@ function changeInputNumberSign() {
     selectedNum = selectedNum.slice(1, selectedNum.length);
 
     if (inputDigitButtonsDisabled) {
-      enableDigitInputButtons();
+      setEnabledDigitInputButtons(true);
       reachedMaxDigits = false;
     }
   } else if (!reachedMaxDigits) {
@@ -160,9 +157,9 @@ function changeInputNumberSign() {
 
     selectedNum = "-" + selectedNum;
 
-    if (selectedNum.length === maxDigits) {
+    if (selectedNum.length === MAX_DIGITS) {
       reachedMaxDigits = true;
-      disableDigitInputButtons();
+      setEnabledDigitInputButtons(false);
     }
   }
 
@@ -177,7 +174,7 @@ function selectOperator(op) {
     finishedInputFirstNumber = true;
     hasComma = false;
     commaButton.enableDOMButton();
-    enableDigitInputButtons();
+    setEnabledDigitInputButtons(true);
   }
 
   if (selectedOperator === "") {
@@ -190,8 +187,8 @@ function selectOperator(op) {
 }
 
 function executeClear() {
-  disableOperatorAndCommandButtons(true);
-  enableDigitInputButtons();
+  setEnabledOperatorAndCommandButtons(false, true);
+  setEnabledDigitInputButtons(true);
   selectedNum = "0";
   calcDisplay.updateDisplayOutput(selectedNum);
 
@@ -224,14 +221,14 @@ function executeDelete() {
     calcDisplay.updateDisplayOutput(selectedNum);
 
     if (inputDigitButtonsDisabled) {
-      enableDigitInputButtons();
+      setEnabledDigitInputButtons(true);
       reachedMaxDigits = false;
     }
   }
 }
 
 function executeEqual() {
-  let operationExecuted = true;
+  let operationExecuted = true; 
 
   if (finishedInputFirstNumber && !displayCleanNeeded) {
     num2 = parseFloat(selectedNum.replace(",", "."));
@@ -270,7 +267,7 @@ function printFormattedOutput(result) {
   if (result != null) {
     let formattedResult = String(result).replace(".", ",");
 
-    if (formattedResult.length > maxDigits) {
+    if (formattedResult.length > MAX_DIGITS) {
       formattedResult = String(result.toExponential(2).replace(".", ","));
     }
 
@@ -281,7 +278,7 @@ function printFormattedOutput(result) {
 }
 
 function blockAllButtonsButClear() {
-  disableDigitInputButtons();
-  disableOperatorAndCommandButtons(false);
+  setEnabledDigitInputButtons(false);
+  setEnabledOperatorAndCommandButtons(false)
   changeSignButton.disableDOMButton();
 }
