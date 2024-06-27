@@ -48,11 +48,11 @@ button:highlighted:not(.op, .blocked) {
   filter: brightness(3);
 }
 
-.highlighted {
+.highlightedButton {
   filter: brightness(1.4);
 }
 
-.blocked {
+.blockedButton {
   filter: brightness(0.7);
   cursor: not-allowed;
 }

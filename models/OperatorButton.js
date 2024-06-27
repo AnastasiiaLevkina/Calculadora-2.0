@@ -4,9 +4,9 @@ class OperatorButton extends Button {
   }
 
   highlightDOMButton() {
-    this.button.classList.add("highlighted");
+    this.button.classList.add("highlightedButton");
   }
   removeHighlightDOMButton() {
-    this.button.classList.remove("highlighted");
+    this.button.classList.remove("highlightedButton");
   }
 }
