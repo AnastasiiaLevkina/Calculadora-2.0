@@ -16,7 +16,7 @@ const deleteButton = addDeleteInputDOMButtonEventListener();
 const equalButton = addEqualInputDOMButtonEventListener();
 const commaButton = addCommaInputDOMButtonEventListener();
 const changeSignButton = addChangeSignInputDOMButtonEventListener();
-//Hola soy mauro
+
 let displayCleanNeeded;
 let hasComma;
 let reachedMaxDigits;
