@@ -206,7 +206,7 @@ function executeDelete() {
 
     if (!selectedNum.includes(",") && hasComma) {
       hasComma = false;
-      commaButton.enableDOMButton();
+      COMMA_BUTTON.enableDOMButton();
     }
 
     if (selectedNum.length === 0) {
@@ -277,5 +277,5 @@ function printFormattedOutput(result) {
 function blockAllButtonsButClear() {
   setEnabledDigitInputButtons(false);
   setEnabledOperatorAndCommandButtons(false);
-  changeSignButton.disableDOMButton();
+  CHANGE_SIGN_BUTTON.disableDOMButton();
 }
