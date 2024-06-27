@@ -7,7 +7,7 @@ let selectedNum = "";
 let defaultDisplayOutput = "0";
 const maxDigits = 9;
 const maxNum = getMaxNum(maxDigits);
-const display = document.querySelector("header");
+const display = document.querySelector("#display");
 const calcDisplay = new Display(display, defaultDisplayOutput);
 
 const numButtons = [];
@@ -208,8 +208,7 @@ function executeDelete() {
 
 function executeEqual() {
   let operationExecuted = true;
-  if (finishedInputFirstNumber) {
-    num2 = parseFloat(selectedNum.replace(",", "."));
+  if (finishedInputFirstNumber && !displayCleanNeeded) {
     switch (selectedOperator) {
       case "+":
         result = sum();

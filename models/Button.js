@@ -7,10 +7,10 @@ class Button {
 
   disableDOMButton() {
     this.button.setAttribute("disabled", "");
-    this.button.classList.add("inactive");
+    this.button.classList.add("blocked");
   }
   enableDOMButton() {
     this.button.removeAttribute("disabled");
-    this.button.classList.remove("inactive");
+    this.button.classList.remove("blocked");
   }
 }

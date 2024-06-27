@@ -44,32 +44,28 @@ button {
   cursor: pointer;
 }
 
-button:active:not(.op, .inactive) {
+button:highlighted:not(.op, .blocked) {
   filter: brightness(3);
 }
 
-.active {
+.highlighted {
   filter: brightness(1.4);
 }
 
-.active-plus {
-  filter: brightness(1.9);
-}
-
-.inactive {
+.blocked {
   filter: brightness(0.7);
   cursor: not-allowed;
 }
 
-.long {
+.longButton {
   grid-column: span 2;
 }
 
-.op {
+.operatorButton {
   background-color: var(--button-red);
 }
 
-#calculadora {
+#calculator {
   background-color: var(--calc-blue);
   border: 4px solid var(--negro-border);
   padding: 20px;
