@@ -265,13 +265,23 @@ function printFormattedOutput(result) {
     let formattedResult = String(result).replace(".", ",");
 
     if (formattedResult.length > MAX_DIGITS) {
-      formattedResult = String(result.toExponential(2).replace(".", ","));
+      formattedResult = convertToScientificNotation(result)
     }
 
     CALC_DISPLAY.updateDisplayOutput(formattedResult);
   } else {
     CALC_DISPLAY.showErrorMessage("ERROR");
   }
+}
+
+function convertToScientificNotation(num){
+  let stringNum = String(num)
+  let exponential = String(num.toExponential())
+  let exponenIndex = exponential.indexOf('e')
+  let tenBase = exponential.slice(exponenIndex, exponential.length)
+  let convertetNum = stringNum[0] + "," + stringNum.slice(1,3) + tenBase
+  
+  return convertetNum
 }
 
 function blockAllButtonsButClear() {
