@@ -1,8 +1,8 @@
 const USER_INTERFACE = new UserInterface(document)
-const CALCULATOR_STATE = new CalculatorState()
-const CALCULATOR_LOGIC = new CALCULATOR_LOGIC()
+const CALCULATOR_STATE = new CalculatorState(USER_INTERFACE)
+const CALCULATOR_LOGIC = new CalculatorLogic(CALCULATOR_STATE, 9)
 
-function init() {
+function init () {
   CALCULATOR_STATE.awaitingDisplayClean = false
   CALCULATOR_STATE.isCommaButtonEnabled = true
   CALCULATOR_STATE.isOperatorButtonsEnabled = false

@@ -1,5 +1,5 @@
 class CalculatorState {
-  currentDisplayValue = ""
+  currentDisplayValue = ''
   awaitingDisplayClean = false
   isCommaButtonEnabled = true
   isOperatorButtonsEnabled = true
@@ -12,9 +12,15 @@ class CalculatorState {
   mustAddNegativeSign = false
   hasNegativeSign = false
 
-  updateCalculatorInterfaceState() {
+  userInterface
+
+  constructor(userInterface) {
+    this.userInterface = userInterface
+  }
+
+  updateCalculatorInterfaceState(digit = '0') {
     if (this.awaitingDisplayClean) {
-      this.currentDisplayValue = "0"
+      this.currentDisplayValue = digit
     }
     if (this.mustRemoveNegativeSign) {
       if (this.hasNegativeSign) {
@@ -22,18 +28,22 @@ class CalculatorState {
       }
     } else if (this.mustAddNegativeSign) {
       if (this.hasNegativeSign) {
-        this.currentDisplayValue = "-" + this.currentDisplayValue
+        this.currentDisplayValue = '-' + this.currentDisplayValue
       }
     }
-    USER_INTERFACE.updateDisplayContent(this.currentDisplayValue)
-    USER_INTERFACE.setEnabledCommaInputButton(this.isCommaButtonEnabled)
-    USER_INTERFACE.setEnabledOperatorInputButtons(this.isOperatorButtonsEnabled)
-    USER_INTERFACE.setEnabledDigitInputButtons(this.isInputDigitButtonsEnabled)
-    USER_INTERFACE.setEnabledClearInputButton(this.isClearButtonEnabled)
-    USER_INTERFACE.setEnabledDeleteInputButton(this.isDeleteButtonEnabled)
-    USER_INTERFACE.setEnabledChangeSignInputButton(
+    this.userInterface.updateDisplayContent(this.currentDisplayValue)
+    this.userInterface.setEnabledCommaInputButton(this.isCommaButtonEnabled)
+    this.userInterface.setEnabledOperatorInputButtons(
+      this.isOperatorButtonsEnabled
+    )
+    this.userInterface.setEnabledDigitInputButtons(
+      this.isInputDigitButtonsEnabled
+    )
+    this.userInterface.setEnabledClearInputButton(this.isClearButtonEnabled)
+    this.userInterface.setEnabledDeleteInputButton(this.isDeleteButtonEnabled)
+    this.userInterface.setEnabledChangeSignInputButton(
       this.isChangeSignButtonEnabled
     )
-    USER_INTERFACE.setEnabledEqualInputButton(this.isEqualButtonEnabled)
+    this.userInterface.setEnabledEqualInputButton(this.isEqualButtonEnabled)
   }
 }

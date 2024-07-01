@@ -1,14 +1,14 @@
 class Display {
-  display;
+  display
 
-  constructor(display) {
-    this.display = display;
+  constructor (display) {
+    this.display = display
   }
 
-  updateDisplayOutput(output) {
-    this.display.textContent = String(output);
+  updateDisplayOutput (output) {
+    this.display.textContent = String(output)
   }
-  showErrorMessage(errorMessage) {
-    this.display.textContent = String(errorMessage);
+  showErrorMessage (errorMessage) {
+    this.display.textContent = String(errorMessage)
   }
 }
