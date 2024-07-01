@@ -264,30 +264,13 @@ function printFormattedOutput(result) {
     let formattedResult = String(result).replace(".", ",");
 
     if (formattedResult.length > MAX_DIGITS) {
-      formattedResult = convertToScientificNotation(result);
+      formattedResult = String(result.toExponential(2));
     }
 
     CALC_DISPLAY.updateDisplayOutput(formattedResult);
   } else {
     CALC_DISPLAY.showErrorMessage("ERROR");
   }
-}
-
-function convertToScientificNotation(num) {
-  let stringNum = String(num);
-  let isNegative = stringNum[0] === "-";
-  let exponential = String(num.toExponential());
-  let exponenIndex = exponential.indexOf("e");
-  let tenBase = exponential.slice(exponenIndex, exponential.length);
-  let convertedNum;
-
-  if (isNegative) {
-    convertedNum = "-" + stringNum[1] + "," + stringNum.slice(2, 4) + tenBase;
-  } else {
-    convertedNum = stringNum[0] + "," + stringNum.slice(1, 3) + tenBase;
-  }
-
-  return convertedNum;
 }
 
 function blockAllButtonsButClear() {
