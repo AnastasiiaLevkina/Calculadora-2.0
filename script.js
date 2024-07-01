@@ -159,7 +159,6 @@ function changeInputNumberSign() {
       setEnabledDigitInputButtons(false);
     }
   }
-
   CALC_DISPLAY.updateDisplayOutput(selectedNum);
 }
 
