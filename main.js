@@ -3,7 +3,6 @@ const CALCULATOR_STATE = new CalculatorState()
 const CALCULATOR_LOGIC = new CALCULATOR_LOGIC()
 
 function init() {
-  CALCULATOR_STATE.currentDisplayValue = "0"
   CALCULATOR_STATE.awaitingDisplayClean = false
   CALCULATOR_STATE.isCommaButtonEnabled = true
   CALCULATOR_STATE.isOperatorButtonsEnabled = false
@@ -14,5 +13,6 @@ function init() {
   CALCULATOR_STATE.isEqualButtonEnabled = false
   CALCULATOR_STATE.mustRemoveNegativeSign = false
   CALCULATOR_STATE.mustAddNegativeSign = false
+  CALCULATOR_STATE.hasNegativeSign = false
   CALCULATOR_STATE.updateCalculatorInterfaceState()
 }
