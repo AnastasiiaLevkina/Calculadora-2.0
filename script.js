@@ -4,7 +4,7 @@ let result = 0;
 let selectedOperator = "";
 let selectedNum = "";
 
-const MAX_DIGITS = 9;
+const MAX_DIGITS = 10;
 const DISPLAY = document.querySelector("#display");
 const CALC_DISPLAY = new Display(display);
 
@@ -22,6 +22,11 @@ let reachedMaxDigits;
 let finishedInputFirstNumber;
 let operatorAndCommandButtonsDisabled;
 let inputDigitButtonsDisabled;
+
+let calculatorStatus = {
+  hasComma: Boolean = false
+  
+}
 
 main();
 
