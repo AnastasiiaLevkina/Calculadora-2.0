@@ -1,5 +1,6 @@
-function addNumberInputDOMButtonEventListener() {
-  const buttons = document.querySelectorAll("button[data-type = number]");
+function addNumberInputDOMButtonEventListenerList(document, query) {
+  let buttonList = []
+  let buttons = document.querySelectorAll(query);
 
   buttons.forEach((button) => {
     button.addEventListener("click", (event) => {
@@ -7,13 +8,15 @@ function addNumberInputDOMButtonEventListener() {
       enterDigit(clickedNum);
     });
 
-    const numButton = new Button(button);
-    NUM_BUTTONS.push(numButton);
+    let numButton = new Button(button);
+    buttonList.push(numButton);
   });
+
+  return buttonList
 }
 
-function addClearInputDOMButtonEventListener() {
-  const clearButton = document.querySelector("button[data-type = clear]");
+function addClearInputDOMButtonEventListener(document, query) {
+  const clearButton = document.querySelector(query);
 
   clearButton.addEventListener("click", (event) => {
     executeClear();
@@ -23,8 +26,8 @@ function addClearInputDOMButtonEventListener() {
   return button;
 }
 
-function addDeleteInputDOMButtonEventListener() {
-  const delButton = document.querySelector("button[data-type=delete]");
+function addDeleteInputDOMButtonEventListener(document, query) {
+  const delButton = document.querySelector(query);
 
   delButton.addEventListener("click", (event) => {
     executeDelete();
@@ -34,8 +37,9 @@ function addDeleteInputDOMButtonEventListener() {
   return button;
 }
 
-function addOperatorInputDOMButtonEventListener() {
-  const operators = document.querySelectorAll("button[data-type = operator]");
+function addOperatorInputDOMButtonEventListenerMap(document, query) {
+  let buttonMap = new Map()
+  let operators = document.querySelectorAll(query);
 
   operators.forEach((button) => {
     button.addEventListener("click", (event) => {
@@ -43,13 +47,15 @@ function addOperatorInputDOMButtonEventListener() {
       selectOperator(clickedOp);
     });
 
-    const opButton = new OperatorButton(button);
-    OPERATOR_BUTTONS.set(button.textContent, opButton);
+    let opButton = new OperatorButton(button);
+    buttonMap.set(button.textContent, opButton);
   });
+
+  return buttonMap
 }
 
-function addEqualInputDOMButtonEventListener() {
-  const equalButton = document.querySelector("button[data-type = equal]");
+function addEqualInputDOMButtonEventListener(document, query) {
+  const equalButton = document.querySelector(query);
 
   equalButton.addEventListener("click", (event) => {
     executeEqual();
@@ -59,8 +65,8 @@ function addEqualInputDOMButtonEventListener() {
   return button;
 }
 
-function addCommaInputDOMButtonEventListener() {
-  const commaButton = document.querySelector("button[data-type = comma]");
+function addCommaInputDOMButtonEventListener(document, query) {
+  const commaButton = document.querySelector(query);
 
   commaButton.addEventListener("click", (event) => {
     let clickedNum = event.target.textContent;
@@ -71,10 +77,8 @@ function addCommaInputDOMButtonEventListener() {
   return button;
 }
 
-function addChangeSignInputDOMButtonEventListener() {
-  const changeSignButton = document.querySelector(
-    "button[data-type = changeSign]"
-  );
+function addChangeSignInputDOMButtonEventListener(document, query) {
+  const changeSignButton = document.querySelector(query);
 
   changeSignButton.addEventListener("click", (event) => {
     changeInputNumberSign();
