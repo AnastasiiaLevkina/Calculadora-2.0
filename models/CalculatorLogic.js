@@ -194,7 +194,7 @@ class CalculatorLogic {
     } else {
       result = this.currentNum
     }
-    formattedNumber = this.checkNumberExceedingDigitLimit(result)
+    formattedNumber = this.formatNumber(result)
     this.state.awaitingDisplayClean = true
     this.state.mustRemoveNegativeSign = true
     this.state.digitToAddToDisplay = String(formattedNumber).replace('.', ',')
@@ -224,7 +224,7 @@ class CalculatorLogic {
     }
   }
 
-  checkNumberExceedingDigitLimit(number) {
+  formatNumber(number) {
     let formattedNumber
     if (String(number).length > this.maxDigits) {
       formattedNumber = number.toExponential(2)
