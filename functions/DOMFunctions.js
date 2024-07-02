@@ -5,7 +5,7 @@ function addDigitsInputDOMButtonEventListenerList(document, query) {
   buttons.forEach((button) => {
     button.addEventListener('click', (event) => {
       let clickedNum = event.target.textContent
-      CALCULATOR_LOGIC.handleDigitInput(clickedNum)
+      CALCULATOR_LOGIC.handleDigitInput(Number(clickedNum))
     })
 
     let numButton = new Button(button)

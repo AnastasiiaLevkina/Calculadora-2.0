@@ -1,3 +1,4 @@
+/*
 let num1 = 0;
 let num2 = 0;
 let result = 0;
@@ -22,7 +23,7 @@ let reachedMaxDigits;
 let finishedInputFirstNumber;
 let operatorAndCommandButtonsDisabled;
 let inputDigitButtonsDisabled;
-
+*/
 let calculatorStatus = {
   hasComma: Boolean = false
   

@@ -1,5 +1,8 @@
 class CalculatorState {
   currentDisplayValue = ''
+  highlightenOperatorButtonSign = ''
+  digitToAddToDisplay = ''
+  negativeSign = ''
   awaitingDisplayClean = false
   isCommaButtonEnabled = true
   isOperatorButtonsEnabled = true
@@ -11,6 +14,7 @@ class CalculatorState {
   mustRemoveNegativeSign = false
   mustAddNegativeSign = false
   hasNegativeSign = false
+  digitsToDelete = 0
 
   userInterface
 
@@ -18,20 +22,31 @@ class CalculatorState {
     this.userInterface = userInterface
   }
 
-  updateCalculatorInterfaceState(digit = '0') {
-    if (this.awaitingDisplayClean) {
-      this.currentDisplayValue = digit
+  updateCalculatorInterfaceState() {
+    console.log(CALCULATOR_LOGIC.currentNum)
+    for (let i = 0; i < this.digitsToDelete; i++) {
+      this.currentDisplayValue = this.currentDisplayValue.slice(0, this.currentDisplayValue.length-1)
+      
+    }
+    if (this.awaitingDisplayClean && this.digitToAddToDisplay.length > 0) {
+      this.currentDisplayValue = this.digitToAddToDisplay
+    } else {
+      this.currentDisplayValue += this.digitToAddToDisplay
     }
     if (this.mustRemoveNegativeSign) {
       if (this.hasNegativeSign) {
-        this.currentDisplayValue.slice(1, this.currentDisplayValue.length)
+        this.negativeSign = ''
       }
     } else if (this.mustAddNegativeSign) {
-      if (this.hasNegativeSign) {
-        this.currentDisplayValue = '-' + this.currentDisplayValue
+      if (!this.hasNegativeSign) {
+        this.negativeSign = '-'
       }
+    }   
+    this.userInterface.removeHighlightAllButtons()
+    if (this.highlightenOperatorButtonSign.length > 0) {
+      this.userInterface.setHighlightOnlyOnSelectedButton(this.highlightenOperatorButtonSign)
     }
-    this.userInterface.updateDisplayContent(this.currentDisplayValue)
+    this.userInterface.updateDisplayContent(this.negativeSign + this.currentDisplayValue)
     this.userInterface.setEnabledCommaInputButton(this.isCommaButtonEnabled)
     this.userInterface.setEnabledOperatorInputButtons(
       this.isOperatorButtonsEnabled
@@ -45,5 +60,11 @@ class CalculatorState {
       this.isChangeSignButtonEnabled
     )
     this.userInterface.setEnabledEqualInputButton(this.isEqualButtonEnabled)
+    this.digitToAddToDisplay = '' 
+    this.awaitingDisplayClean = false
+    this.mustRemoveNegativeSign = false
+    this.mustAddNegativeSign = false
+    this.digitsToDelete = 0
   }
+
 }

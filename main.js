@@ -3,7 +3,8 @@ const CALCULATOR_STATE = new CalculatorState(USER_INTERFACE)
 const CALCULATOR_LOGIC = new CalculatorLogic(CALCULATOR_STATE, 9)
 
 function init () {
-  CALCULATOR_STATE.awaitingDisplayClean = false
+  CALCULATOR_STATE.digitToAddToDisplay = '0'
+  CALCULATOR_STATE.awaitingDisplayClean = true
   CALCULATOR_STATE.isCommaButtonEnabled = true
   CALCULATOR_STATE.isOperatorButtonsEnabled = false
   CALCULATOR_STATE.isInputDigitButtonsEnabled = true
@@ -15,4 +16,5 @@ function init () {
   CALCULATOR_STATE.mustAddNegativeSign = false
   CALCULATOR_STATE.hasNegativeSign = false
   CALCULATOR_STATE.updateCalculatorInterfaceState()
+  CALCULATOR_STATE.awaitingDisplayClean = true
 }

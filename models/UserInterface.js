@@ -111,4 +111,14 @@ class UserInterface {
       this.equalButton.disableDOMButton()
     }
   }
+
+  setHighlightOnlyOnSelectedButton(op){
+    this.operatorButtons.get(op).highlightDOMButton() 
+  }
+
+  removeHighlightAllButtons(){
+    this.operatorButtons.forEach((button) =>{
+      button.removeHighlightDOMButton()
+    })
+  }
 }
