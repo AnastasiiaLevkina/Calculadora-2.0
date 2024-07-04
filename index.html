@@ -21,27 +21,39 @@
     <div id="calculator">
       <header class="display" id="display">0</header>
       <main>
-        <button id="clearButton" data-type="clear">C</button>
-        <button id="delButton" data-type="delete">DEL</button>
-        <button class="num" id="changeSignButton" data-type="changeSign">
+        <button id="clearButton" data-type="clear" data-testid="C">C</button>
+        <button id="delButton" data-type="delete" data-testid="DELL">DEL</button>
+        <button class="num" id="changeSignButton" data-type="changeSign" data-testid="+-">
           +/-
         </button>
-        <button class="operatorButton" id="divideOperatorButton" data-type="operator">/</button>
-        <button class="numButton" id="1" data-type="number">1</button>
-        <button class="numButton" id="2" data-type="number">2</button>
-        <button class="numButton" id="3" data-type="number">3</button>
-        <button class="operatorButton" id="multiplyOperatorButton" data-type="operator">x</button>
-        <button class="numButton" id="4" data-type="number">4</button>
-        <button class="numButton" id="5" data-type="number">5</button>
-        <button class="numButton" id="6" data-type="number">6</button>
-        <button class="operatorButton" id="addOperatorButton" data-type="operator">+</button>
-        <button class="numButton" id="7" data-type="number">7</button>
-        <button class="numButton" id="8" data-type="number">8</button>
-        <button class="numButton" id="9" data-type="number">9</button>
-        <button class="operatorButton" id="subtractOperatorButton" data-type="operator">-</button>
-        <button id="commaButton" data-type="comma">,</button>
-        <button class="numButton" id="0" data-type="number">0</button>
-        <button class="longButton" id="equalButton" data-type="equal">=</button>
+        <button class="operatorButton" id="divideOperatorButton" data-type="operator" data-testid="/">
+          /
+        </button>
+        <button class="numButton" id="1" data-type="number" data-testid="1">1</button>
+        <button class="numButton" id="2" data-type="number" data-testid="2">2</button>
+        <button class="numButton" id="3" data-type="number" data-testid="3">3</button>
+        <button class="operatorButton" id="multiplyOperatorButton" data-type="operator" data-testid="*">
+          x
+        </button>
+        <button class="numButton" id="4" data-type="number" data-testid="4">4</button>
+        <button class="numButton" id="5" data-type="number" data-testid="5">5</button>
+        <button class="numButton" id="6" data-type="number" data-testid="6">6</button>
+        <button class="operatorButton" id="addOperatorButton" data-type="operator" data-testid="+">
+          +
+        </button>
+        <button class="numButton" id="7" data-type="number" data-testid="7">7</button>
+        <button class="numButton" id="8" data-type="number" data-testid="8">8</button>
+        <button class="numButton" id="9" data-type="number" data-testid="9">9</button>
+        <button class="operatorButton" id="subtractOperatorButton" data-type="operator" data-testid="-">
+          -
+        </button>
+        <button id="commaButton" data-type="comma" data-testid=",">
+          ,
+        </button>
+        <button class="numButton" id="0" data-type="number" data-testid="0">0</button>
+        <button class="longButton" id="equalButton" data-type="equal" data-testid="=">
+          =
+        </button>
       </main>
     </div>
   </div>
