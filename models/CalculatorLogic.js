@@ -12,12 +12,12 @@ class CalculatorLogic {
 
   state
 
-  constructor(state, maxDigits) {
+  constructor (state, maxDigits) {
     this.state = state
     this.maxDigits = maxDigits
   }
 
-  handleDigitInput(digit) {
+  handleDigitInput (digit) {
     if (this.digitsCount < this.maxDigits) {
       if (!this.hasComma) {
         if (this.digitsCount > 0 && this.currentNum === 0) {
@@ -29,9 +29,8 @@ class CalculatorLogic {
       } else {
         this.decimalsCount++
         this.currentNum +=
-          digit *
-          Math.pow(10, this.decimalsCount * -1) *
-          (this.isNegative ? -1 : 1)
+        digit * Math.pow(10, this.decimalsCount * -1) * (this.isNegative ? -1 : 1)
+        this.currentNum.toFixed(this.decimalsCount)
       }
       if (this.isNegative && this.currentNum >= 0) {
         this.currentNum *= -1
@@ -47,7 +46,7 @@ class CalculatorLogic {
     }
   }
 
-  handleCommaInput(comma) {
+  handleCommaInput (comma) {
     if (!this.hasComma && this.digitsCount < this.maxDigits) {
       if (this.digitsCount > 0) {
         this.state.digitToAddToDisplay = comma
@@ -63,7 +62,7 @@ class CalculatorLogic {
     }
   }
 
-  handleChangeSignInput() {
+  handleChangeSignInput () {
     if (this.digitsCount < this.maxDigits || this.isNegative) {
       this.currentNum *= -1
       if (this.digitsCount === 0 && this.state.awaitingDisplayClean) {
@@ -84,7 +83,7 @@ class CalculatorLogic {
     }
   }
 
-  handleOperatorInput(op) {
+  handleOperatorInput (op) {
     if (this.selectedOperator.length === 0) {
       this.selectedOperator = op
       this.state.highlightenOperatorButtonSign = op
@@ -110,7 +109,7 @@ class CalculatorLogic {
     }
   }
 
-  handleClearInput() {
+  handleClearInput () {
     this.currentNum = 0
     this.num1 = 0
     this.num2 = 0
@@ -139,7 +138,7 @@ class CalculatorLogic {
     this.state.hasNegativeSign = false
   }
 
-  handleDeleteInput() {
+  handleDeleteInput () {
     if (this.digitsCount > 0) {
       if (!this.hasComma) {
         this.currentNum = parseInt(this.currentNum / 10)
@@ -163,7 +162,7 @@ class CalculatorLogic {
     }
   }
 
-  handleEqualInput() {
+  handleEqualInput () {
     let result
     let formattedNumber
     if (this.writingSecondNumber) {
@@ -182,7 +181,7 @@ class CalculatorLogic {
           result = divide(this.num1, this.num2)
           break
         default:
-          operationExecuted = false
+          result = num2
           break
       }
       this.state.isOperatorButtonsEnabled = false
@@ -191,17 +190,18 @@ class CalculatorLogic {
       this.state.isDeleteButtonEnabled = false
       this.state.isEqualButtonEnabled = false
       this.state.isChangeSignButtonEnabled = false
+      this.selectedOperator = ''
     } else {
       result = this.currentNum
     }
-    formattedNumber = this.formatNumber(result)
+    formattedNumber = this.formatNumber(result.toFixed(this.decimalsCount))
     this.state.awaitingDisplayClean = true
     this.state.mustRemoveNegativeSign = true
-    this.state.digitToAddToDisplay = String(formattedNumber).replace('.', ',')
+    this.state.digitToAddToDisplay = String(formattedNumber)//  .replace('.', ',')
     this.state.updateCalculatorInterfaceState()
   }
 
-  handleDigitsLimit() {
+  handleDigitsLimit () {
     if (this.digitsCount === this.maxDigits) {
       this.state.isInputDigitButtonsEnabled = false
       this.state.isCommaButtonEnabled = false
@@ -224,9 +224,13 @@ class CalculatorLogic {
     }
   }
 
-  formatNumber(number) {
+  formatNumber (number) {
     let formattedNumber
-    if (String(number).length > this.maxDigits) {
+    if (number === null) {
+      formattedNumber = 'ERROR'
+    } else if (String(number).length > this.maxDigits) {
+      console.log(number)
+      console.log(String(number).length)
       formattedNumber = number.toExponential(2)
     } else {
       formattedNumber = number
